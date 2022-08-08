@@ -2,12 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 
-import { Heading } from "components";
+import { App } from "app";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Heading text="Hola Mundo!" />
+    <App />
   </React.StrictMode>
 );
 
