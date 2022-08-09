@@ -12,12 +12,11 @@ export class FromListTypeResponseToLaunchEntityListMapper extends Mapper {
         launch;
 
       const launchEntity = LaunchEntity.create({
-        fligthNumber: flight_number,
+        flightNumber: flight_number,
         missionName: mission_name,
         launchDateLocal: launch_date_local,
         launchSuccess: launch_success,
       });
-      debugger;
 
       return launchEntity;
     });

@@ -15,7 +15,7 @@ export const CardInfo = ({
       <div>
         <p>
           <strong>Mission Name: </strong>
-          {missionName} - Flight {flightNumber}
+          {missionName} - Flight #{flightNumber}
         </p>
         <p>
           <strong>Launch Date: </strong>

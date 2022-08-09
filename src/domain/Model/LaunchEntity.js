@@ -2,7 +2,6 @@ import { Model } from "./Model";
 
 export class LaunchEntity extends Model {
   static create({ flightNumber, missionName, launchDateLocal, launchSuccess }) {
-    debugger;
     return new LaunchEntity({
       flightNumber,
       missionName,
