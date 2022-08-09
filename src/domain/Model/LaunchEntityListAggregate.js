@@ -1,8 +1,10 @@
 import { Model } from "./Model";
 import { LaunchEntity } from "./LaunchEntity";
+import { PaginationValueObject } from "./PaginationValueObject";
 
 export class LaunchEntityListAggregate extends Model {
-  static create({ launchEntityList }) {
+  static create({ launchEntityList, pagination }) {
+    const { page, totalPages, totalResults } = pagination;
     return new LaunchEntityListAggregate({
       launchEntityList: launchEntityList.map((entity) => {
         const { flightNumber, missionName, launchDateLocal, launchSuccess } =
@@ -13,19 +15,27 @@ export class LaunchEntityListAggregate extends Model {
           launchDateLocal,
           launchSuccess,
         });
-        //TODO: pagination
+      }),
+      pagination: PaginationValueObject.create({
+        page,
+        totalPages,
+        totalResults,
       }),
     });
   }
 
-  constructor({ launchEntityList }) {
+  constructor({ launchEntityList, pagination }) {
     super();
     this._launchEntityList = launchEntityList;
-    //TODO: pagination
+    this._pagination = pagination;
   }
 
   launchEntityList() {
     return this._launchEntityList;
+  }
+
+  pagination() {
+    return this._pagination;
   }
 
   toJSON() {
@@ -33,6 +43,7 @@ export class LaunchEntityListAggregate extends Model {
       launchEntityList: this.launchEntityList().map((entity) =>
         entity.toJSON()
       ),
+      pagination: this.pagination().toJSON(),
     };
   }
 }

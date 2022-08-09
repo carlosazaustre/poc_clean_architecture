@@ -15,17 +15,33 @@ export class LaunchRepository extends Repository {
     this._fetcher = fetcher;
   }
 
-  async getLaunchesList() {
-    const { API_URL } = config;
+  async getLaunchesList({ pageNumber }) {
+    const { API_URL, pageSize } = config;
+    const pageNumberValue = pageNumber.value();
     const url = `${API_URL}/launches`;
     const response = await this._fetcher
       .get(url)
       .then((response) => response.data);
 
+    // We made a custom pagination here, to return a rawAPIResponse to the caller in a better format.
+    const totalResults = response.length;
+    const totalPages = totalResults / pageSize;
+    const results = response.slice(
+      +pageNumberValue * pageSize,
+      (+pageNumberValue + 1) * pageSize
+    );
+
+    const rawApiResponse = {
+      results,
+      page: pageNumberValue,
+      total_pages: totalPages,
+      total_results: totalResults,
+    };
+
     const launchEntityListMapper =
       FromListTypeResponseToLaunchEntityListMapper.create();
 
-    return launchEntityListMapper.map(response);
+    return launchEntityListMapper.map(rawApiResponse);
   }
 
   async getLaunch({ flightNumber }) {

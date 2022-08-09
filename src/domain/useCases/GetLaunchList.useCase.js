@@ -1,5 +1,6 @@
 import { UseCase } from "./UseCase";
 import { LaunchRepository } from "domain/Repositories/Launch.repository";
+import { PageNumberValueObject } from "domain/Model/PageNumberValueObject";
 
 export class GetLaunchListUseCase extends UseCase {
   static create() {
@@ -12,8 +13,11 @@ export class GetLaunchListUseCase extends UseCase {
     this._repository = repository;
   }
 
-  async execute() {
-    const launchEntityListAggregate = await this._repository.getLaunchesList();
+  async execute({ pageNumber }) {
+    const pageNumberValueObject = PageNumberValueObject.create({ pageNumber });
+    const launchEntityListAggregate = await this._repository.getLaunchesList({
+      pageNumber: pageNumberValueObject,
+    });
 
     return launchEntityListAggregate.toJSON();
   }
