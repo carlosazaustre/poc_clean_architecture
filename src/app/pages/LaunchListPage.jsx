@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import { Heading } from "components";
 import { Domain } from "domain";
 
-import { LaunchList } from "./LaunchList";
-import { Pagination } from "./Pagination";
+import { LaunchList } from "../components/LaunchList";
+import { Pagination } from "../components/Pagination";
 import "styles/index.css";
 
 export const LaunchListPage = () => {
