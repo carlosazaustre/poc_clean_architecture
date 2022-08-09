@@ -1,13 +1,19 @@
 import { Model } from "./Model";
-// TODO: implement InvalidPageNumber Error
+import { InvalidPageNumber } from "domain/Errors/InvalidPageNumber.error";
 
 export class PageNumberValueObject extends Model {
   static create({ pageNumber }) {
-    // TODO: validate page number
+    PageNumberValueObject.validate({ pageNumber });
     return new PageNumberValueObject({ pageNumber });
   }
 
-  // TODO: static validate
+  static validate({ pageNumber }) {
+    if (!pageNumber || pageNumber < 0) {
+      throw InvalidPageNumber.create(
+        `[PageNumberValueObject.validate] pageNumber(${pageNumber}) must be a positive number`
+      );
+    }
+  }
 
   constructor({ pageNumber }) {
     super();

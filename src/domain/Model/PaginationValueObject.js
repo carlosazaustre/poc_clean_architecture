@@ -1,8 +1,30 @@
 import { Model } from "./Model";
+import { InvalidPageNumber } from "domain/Errors/InvalidPageNumber.error";
 
 export class PaginationValueObject extends Model {
   static create({ page, totalPages, totalResults }) {
+    PaginationValueObject.validate({ page, totalPages });
     return new PaginationValueObject({ page, totalPages, totalResults });
+  }
+
+  static validate({ page, totalPages }) {
+    if (!page || page < 0) {
+      throw InvalidPageNumber.create(
+        `[PageNumberValueObject.validate] page(${page}) must be a positive number`
+      );
+    }
+
+    if (!totalPages || totalPages < 0) {
+      throw InvalidPageNumber.create(
+        `[PageNumberValueObject.validate] totalPages(${totalPages}) must be a positive number`
+      );
+    }
+
+    if (page > totalPages) {
+      throw InvalidPageNumber.create(
+        `[PageNumberValueObject.validate] page(${page}) must be less than or equal to totalPages(${totalPages})`
+      );
+    }
   }
 
   constructor({ page, totalPages, totalResults }) {
