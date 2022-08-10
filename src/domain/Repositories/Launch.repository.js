@@ -2,6 +2,7 @@ import { Repository } from "./Repository";
 import { HttpFetcher } from "domain/Fetchers/Http.fetcher";
 import { FromLaunchByIdResponseToLaunchEntityMapper } from "domain/Mappers/FromLaunchByIdResponseToLaunchEntity.mapper";
 import { FromListTypeResponseToLaunchEntityListMapper } from "domain/Mappers/FromListTypeResponseToLaunchEntityList.mapper";
+import { getTotalPages, getResultsPaginated } from "helpers/pagination";
 import config from "domain/config";
 
 export class LaunchRepository extends Repository {
@@ -25,14 +26,15 @@ export class LaunchRepository extends Repository {
 
     // We made a custom pagination here, to return a rawAPIResponse to the caller in a better format.
     const totalResults = response.length;
-    const totalPages = totalResults / pageSize;
-    const results = response.slice(
-      +pageNumberValue * pageSize,
-      (+pageNumberValue + 1) * pageSize
+    const totalPages = getTotalPages(totalResults, pageSize);
+    const resultsPaginated = getResultsPaginated(
+      response,
+      pageSize,
+      pageNumberValue
     );
 
     const rawApiResponse = {
-      results,
+      results: resultsPaginated,
       page: pageNumberValue,
       total_pages: totalPages,
       total_results: totalResults,
