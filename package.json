@@ -39,6 +39,7 @@
     ]
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.21.2",
     "node-sass": "^7.0.1"
   }
 }
