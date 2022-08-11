@@ -7,7 +7,7 @@ export const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/page/1" replace />} />
+        <Route path="/" element={<Navigate to="/page/0" replace />} />
         <Route path="/page/:pageNumber" element={<LaunchListPage />} />
       </Routes>
     </BrowserRouter>

@@ -8,21 +8,21 @@ export class PaginationValueObject extends Model {
   }
 
   static validate({ page, totalPages }) {
-    if (!page || page < 0) {
+    if (page < 0 || page === undefined) {
       throw InvalidPageNumber.create(
-        `[PageNumberValueObject.validate] page(${page}) must be a positive number`
+        `[PaginationValueObject.validate] page(${page}) must be a positive number`
       );
     }
 
     if (!totalPages || totalPages < 0) {
       throw InvalidPageNumber.create(
-        `[PageNumberValueObject.validate] totalPages(${totalPages}) must be a positive number`
+        `[PaginationValueObject.validate] totalPages(${totalPages}) must be a positive number`
       );
     }
 
     if (page > totalPages) {
       throw InvalidPageNumber.create(
-        `[PageNumberValueObject.validate] page(${page}) must be less than or equal to totalPages(${totalPages})`
+        `[PaginationValueObject.validate] page(${page}) must be less than or equal to totalPages(${totalPages})`
       );
     }
   }

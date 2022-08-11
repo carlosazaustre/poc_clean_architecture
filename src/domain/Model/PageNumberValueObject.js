@@ -8,7 +8,7 @@ export class PageNumberValueObject extends Model {
   }
 
   static validate({ pageNumber }) {
-    if (!pageNumber || pageNumber < 0) {
+    if (pageNumber < 0 || pageNumber === undefined) {
       throw InvalidPageNumber.create(
         `[PageNumberValueObject.validate] pageNumber(${pageNumber}) must be a positive number`
       );
